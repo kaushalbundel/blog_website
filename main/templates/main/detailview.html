@@ -1,0 +1,26 @@
+{% extends "main/base.html" %}
+{% block content %}
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <a class="mr-2"></a>{{ object.author }}</a>
+                <small class="text-muted">{{ object.date_posted|date:"jS M Y" }}</small>
+            </div>
+            <h2 class="article-title">{{ object.title }}</h2>
+            <p class="tags">Tags:
+                {% for tag in blog.tags.all %}
+                <a href="{% url "main:tagged_blogs" tag.slug %}">#{{tag}}</a>
+                {% endfor %}
+            </p>
+            <p class="article-content">{{ object.content }}</p>
+            <h2 class="article-title">Recommended Posts</h2>
+            <ul>
+                {% for blog in similar_blog %}
+                <li>
+                    <a href="{% url "main:blog_detail" blog.id %}">{{blog.title}}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </article>
+{% endblock content %}
